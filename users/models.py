@@ -4,11 +4,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 
+class Category(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Category Name', default = None)
+
+    def __str__(self):
+        return self.name
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
-    bio = models.TextField()
+    bio = models.TextField(null=False, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -26,6 +31,7 @@ class Profile(models.Model):
 class Question(models.Model):
     text = models.CharField(max_length=255, verbose_name='Question Text')
     is_active = models.BooleanField(default=True, verbose_name='Is Question Active?')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='questions', verbose_name='Category', default = None)
 
     def __str__(self):
         return self.text
@@ -37,5 +43,3 @@ class UserResponse(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.question.text} - {self.answer}"
-
-

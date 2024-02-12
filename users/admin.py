@@ -3,7 +3,9 @@ from .models import Profile
 
 admin.site.register(Profile)
 
-from .models import Question, UserResponse
+from .models import Question, UserResponse, Category
+
 
 admin.site.register(Question)
 admin.site.register(UserResponse)
+admin.site.register(Category)

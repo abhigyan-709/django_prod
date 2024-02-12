@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+import warnings
+
+warnings.filterwarnings("ignore", message="Database objects do not implement truth value testing or bool(). Please compare with None instead: database is not None", category=UserWarning)
+
 # To keep secret keys in environment variables
 from dotenv import load_dotenv
 
@@ -85,11 +89,17 @@ WSGI_APPLICATION = 'user_management.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'prod',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'host': 'mongodb+srv://globaltamasha:1122334455@cluster0.n1f8cw0.mongodb.net'
+            }  
+        }
 }
+
+
 
 
 # Password validation
