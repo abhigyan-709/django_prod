@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-
+from decouple import config
 import warnings
 
 warnings.filterwarnings("ignore", message="Database objects do not implement truth value testing or bool(). Please compare with None instead: database is not None", category=UserWarning)
@@ -88,15 +88,26 @@ WSGI_APPLICATION = 'user_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'djongo',
+#             'NAME': 'prod',
+#             'ENFORCE_SCHEMA': False,
+#             'CLIENT': {
+#                 'host': 'mongodb+srv://globaltamasha:1122334455@cluster0.n1f8cw0.mongodb.net'
+#             }  
+#         }
+# }
+
 DATABASES = {
-        'default': {
-            'ENGINE': 'djongo',
-            'NAME': 'prod',
-            'ENFORCE_SCHEMA': False,
-            'CLIENT': {
-                'host': 'mongodb+srv://globaltamasha:1122334455@cluster0.n1f8cw0.mongodb.net'
-            }  
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': config('DB_NAME'),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': config('DB_HOST'),
         }
+    }
 }
 
 
